@@ -13,14 +13,14 @@ fetch(
   .then(out => {
     let found = false;
 
+    const name = document.querySelector("div.apphub_AppName");
+
     for (let i = 0; i < out.length; i++) {
-      if (out[i].steamUrl === steamUrl) {
+      if (out[i].steamUrl === steamUrl || out[i].title === name.innerHTML) {
         found = out[i];
         break;
       }
     }
-
-    const name = document.querySelector("div.apphub_AppName");
 
     if (found) {
       name.innerHTML +=
