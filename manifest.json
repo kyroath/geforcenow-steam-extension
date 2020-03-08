@@ -5,11 +5,13 @@
   "version": "0.1.0",
   "description": "A Chrome extension to see which games on steam is available on Steam easily.",
 
+  "permissions": ["storage"],
+
   "content_scripts": [
     {
       "css": ["styles.css"],
       "js": ["content.js"],
-      "matches": ["https://store.steampowered.com/app/*"]
+      "matches": ["https://store.steampowered.com/*"]
     }
   ]
 }
