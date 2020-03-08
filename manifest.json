@@ -9,9 +9,8 @@
 
   "content_scripts": [
     {
-      "css": ["styles.css"],
       "js": ["content.js"],
-      "matches": ["https://store.steampowered.com/*"]
+      "matches": ["https://store.steampowered.com/app/*"]
     }
   ]
 }

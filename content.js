@@ -1,21 +1,6 @@
 let steamUrl = "";
 const tokens = window.location.href.split("/");
-
-if (tokens[3] !== "app") {
-  checkURLs();
-} else {
-  gamePage();
-}
-
-function checkURLs() {
-  const links = document.getElementsByTagName("a");
-  links.forEach(e => {
-    const linkTokens = e.split("/");
-    if (linkTokens[3] === "app") {
-      f;
-    }
-  });
-}
+gamePage();
 
 function gamePage() {
   tokens.forEach((e, i) => {
@@ -40,13 +25,19 @@ function updateGamePage(date, updateDate) {
     )
   ) {
     const gameData = localStorage.getItem("gameData");
-    checkGame(JSON.parse(gameData));
+    if (gameData) {
+      updatePage(JSON.parse(gameData));
+    } else {
+      const out = fetchData();
+      updateDate(out);
+    }
   } else {
-    fetchDataAndUpdate();
+    const out = fetchData();
+    updateDate(out);
   }
 }
 
-function fetchDataAndUpdate() {
+function fetchData() {
   fetch(
     "https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json?JSON"
   )
@@ -55,11 +46,11 @@ function fetchDataAndUpdate() {
       localStorage.setItem("updateDate", new Date().toISOString());
       localStorage.setItem("gameData", JSON.stringify(out));
       console.log("saved updated game data.");
-      checkGame(out);
+      return out;
     });
 }
 
-function checkGame(data) {
+function updatePage(data) {
   let found = false;
 
   const name = document.querySelector("div.apphub_AppName");
@@ -73,9 +64,9 @@ function checkGame(data) {
 
   if (found) {
     name.innerHTML +=
-      '<span style="vertical-align: middle; font-size: 13px; color: #7f997a; margin-left: 10px;">This game is available on GeForce Now.';
+      '<span style="vertical-align: middle; font-size: 13px; color: #7f997a; margin-left: 10px;">This game is available on GeForce Now.</span>';
   } else {
     name.innerHTML +=
-      '<span style="vertical-align: middle; font-size: 13px; color: #bf7c7c; margin-left: 10px;">This game is not available on GeForce Now.';
+      '<span style="vertical-align: middle; font-size: 13px; color: #bf7c7c; margin-left: 10px;">This game is not available on GeForce Now.</span>';
   }
 }
